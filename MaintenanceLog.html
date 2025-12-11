@@ -72,7 +72,7 @@ button:hover {
   border-radius: 5px;
 }
 
-/* Mobile scaling */
+/* Mobile-only adjustments */
 @media (max-width: 480px) {
   h2 { font-size: 6vw; margin-bottom: 5vw; }
   label { font-size: 4.5vw; margin-top: 4vw; }
@@ -86,7 +86,8 @@ button:hover {
 <div class="container">
   <h2>Maintenance Log Entry</h2>
 
-  <button onclick="testConnection()" style="background: #28a745;">Test Connection</button>
+  <!-- Test Connection Button -->
+  <button onclick="testConnection()" style="background: #28a745; margin-bottom: 20px;">Test Connection</button>
 
   <label>Machine Name:</label>
   <input id="machine" placeholder="Cabinet ID or Machine Name">
