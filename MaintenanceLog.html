@@ -5,8 +5,9 @@
 <title>Maintenance Log</title>
 <style>
 body { font-family: Arial; padding: 20px; }
-input, textarea { width: 100%; padding: 8px; margin-top: 10px; font-size: 15px; box-sizing: border-box; }
-button { margin-top: 10px; padding: 10px; font-size: 15px; }
+label { display: block; margin-top: 15px; font-weight: bold; }
+input, textarea, button { width: 100%; padding: 8px; margin-top: 5px; font-size: 15px; box-sizing: border-box; }
+button { margin-top: 10px; }
 #video { width: 100%; margin-top: 10px; display: none; border: 1px solid #ccc; }
 </style>
 </head>
@@ -15,12 +16,12 @@ button { margin-top: 10px; padding: 10px; font-size: 15px; }
 <h2>Maintenance Log Entry</h2>
 
 <label>Machine Name:</label>
-<input id="machine" placeholder="Cabinet ID or Machine Name"><br>
-<button onclick="startScan()">Scan QR</button><br>
+<input id="machine" placeholder="Cabinet ID or Machine Name">
+<button onclick="startScan()">Scan QR</button>
 
-<video id="video"></video><br>
+<video id="video"></video>
 
-<label>Issue Found:</label><br>
+<label>Issue Found:</label>
 <input id="issue" placeholder="Describe the issue">
 
 <label>Actions Taken:</label>
@@ -36,14 +37,14 @@ button { margin-top: 10px; padding: 10px; font-size: 15px; }
 
 <script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.js"></script>
 <script>
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzG4eiGiMUMbXmysSMlfvUWKLsoIPz-rx0mi1FUxhQHGEpKPwLkS43LP4MaSpOyAdch/exec"; // Replace with your Apps Script URL
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzG4eiGiMUMbXmysSMlfvUWKLsoIPz-rx0mi1FUxhQHGEpKPwLkS43LP4MaSpOyAdch/exec";
 const video = document.getElementById('video');
 
 async function startScan() {
   video.style.display = 'block';
   const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
   video.srcObject = stream;
-  video.setAttribute("playsinline", true); // iOS compatibility
+  video.setAttribute("playsinline", true);
   video.play();
   requestAnimationFrame(tick);
 }
