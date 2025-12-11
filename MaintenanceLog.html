@@ -4,81 +4,101 @@
 <meta charset="UTF-8">
 <title>Maintenance Log</title>
 <style>
-  /* Base styling */
-  body {
-    font-family: Arial, sans-serif;
-    padding: 20px;
-    margin: 0;
-    background-color: #f7f7f7;
-    display: flex;
-    justify-content: center;
-  }
+/* Base styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
 
-  /* Container to center and limit width */
-  .container {
+.container {
+  width: 100%;
+  max-width: 480px;
+  background: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-top: 15px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+input, textarea {
+  width: 95%;
+  padding: 10px;
+  margin-top: 5px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+button {
+  display: inline-block;
+  padding: 10px 20px;
+  margin-top: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  background: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #0056b3;
+}
+
+#video {
+  width: 100%;
+  margin-top: 10px;
+  display: none;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Mobile scaling */
+@media (max-width: 480px) {
+  input, textarea {
     width: 100%;
-    max-width: 480px; /* nice width for desktop */
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-  }
-
-  h2 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-
-  label {
-    display: block;
-    margin-top: 15px;
-    font-weight: bold;
-  }
-
-  input, textarea, button {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    font-size: 16px;
-    box-sizing: border-box;
-    border-radius: 4px;
-    border: 1px solid #ccc;
+    font-size: 18px;
+    padding: 12px;
   }
 
   button {
-    margin-top: 15px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
+    font-size: 18px;
+    padding: 12px;
   }
 
-  button:hover {
-    background-color: #0056b3;
+  label {
+    font-size: 18px;
+  }
+}
+
+/* Larger desktop screens */
+@media (min-width: 800px) {
+  input, textarea, button {
+    font-size: 18px;
+    padding: 12px;
   }
 
-  #video {
-    width: 100%;
-    margin-top: 10px;
-    display: none;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+  label {
+    font-size: 18px;
   }
-
-  /* Mobile tweaks */
-  @media (max-width: 480px) {
-    body {
-      padding: 10px;
-    }
-    .container {
-      padding: 15px;
-    }
-    input, textarea, button {
-      font-size: 14px;
-      padding: 8px;
-    }
-  }
+}
 </style>
 </head>
 <body>
@@ -89,7 +109,6 @@
   <label>Machine Name:</label>
   <input id="machine" placeholder="Cabinet ID or Machine Name">
   <button onclick="startScan()">Scan QR</button>
-
   <video id="video"></video>
 
   <label>Issue Found:</label>
