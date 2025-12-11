@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Maintenance Log</title>
+<style>
+body { font-family: Arial, sans-serif; padding: 20px; }
+.bullet { cursor: pointer; padding: 10px; border: 1px solid #ccc; margin-bottom: 5px; border-radius: 6px; }
+.selected { background-color: #cce5ff; }
+</style>
+<script>
+let current = null;
+function toggle(id) {
+  const el = document.getElementById(id);
+  if (current && current !== el) current.classList.remove("selected");
+  el.classList.toggle("selected");
+  current = el.classList.contains("selected") ? el : null;
+}
+</script>
+</head>
+<body>
+<h2>Maintenance Log</h2>
+<div id="b1" class="bullet" onclick="toggle('b1')">Loose connector</div>
+<div id="b2" class="bullet" onclick="toggle('b2')">Screen flicker</div>
+<div id="b3" class="bullet" onclick="toggle('b3')">Coin mech jam</div>
+</body>
+</html>
