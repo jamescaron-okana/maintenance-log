@@ -4,24 +4,69 @@
 <meta charset="UTF-8">
 <title>Maintenance Log</title>
 <style>
-body { font-family: Arial, sans-serif; padding: 20px; }
-.bullet { cursor: pointer; padding: 10px; border: 1px solid #ccc; margin-bottom: 5px; border-radius: 6px; }
-.selected { background-color: #cce5ff; }
+body { font-family: Arial; padding: 20px; }
+input, textarea { width: 100%; padding: 8px; margin-top: 10px; font-size: 15px; box-sizing: border-box; }
+button { margin-top: 15px; width: 100%; padding: 12px; font-size: 16px; }
 </style>
-<script>
-let current = null;
-function toggle(id) {
-  const el = document.getElementById(id);
-  if (current && current !== el) current.classList.remove("selected");
-  el.classList.toggle("selected");
-  current = el.classList.contains("selected") ? el : null;
-}
-</script>
 </head>
 <body>
-<h2>Maintenance Log</h2>
-<div id="b1" class="bullet" onclick="toggle('b1')">Loose connector</div>
-<div id="b2" class="bullet" onclick="toggle('b2')">Screen flicker</div>
-<div id="b3" class="bullet" onclick="toggle('b3')">Coin mech jam</div>
+
+<h2>Maintenance Log Entry</h2>
+
+<label>Machine Name:</label>
+<input id="machine" placeholder="Cabinet ID or Machine Name">
+
+<label>Issue Found:</label>
+<input id="issue" placeholder="Describe the issue">
+
+<label>Actions Taken:</label>
+<textarea id="action" rows="3" placeholder="Repairs or steps taken…"></textarea>
+
+<label>Parts Used:</label>
+<input id="parts" placeholder="Optional – list parts used">
+
+<label>Technician Initials:</label>
+<input id="tech" placeholder="Your initials">
+
+<button onclick="submitForm()">Submit Entry</button>
+
+<script>
+const WEB_APP_URL = "YOUR_APPS_SCRIPT_URL_HERE"; // Replace with your web app URL
+
+async function submitForm() {
+  const machine = document.getElementById('machine').value.trim();
+  const issue = document.getElementById('issue').value.trim();
+  const action = document.getElementById('action').value.trim();
+  const parts = document.getElementById('parts').value.trim();
+  const tech = document.getElementById('tech').value.trim();
+
+  if (!machine || !issue || !tech) {
+    alert("Machine, Issue, and Technician Initials are required.");
+    return;
+  }
+
+  const payload = {
+    machine, issue, action, parts, tech
+  };
+
+  try {
+    const response = await fetch(WEB_APP_URL, {
+      method: "POST",
+      body: JSON.stringify(payload),
+      headers: { "Content-Type": "application/json" }
+    });
+
+    const result = await response.json();
+    if (result.status === "success") {
+      document.body.innerHTML = "<h3>Repair Logged ✓</h3>";
+    } else {
+      alert("Error submitting data.");
+    }
+  } catch(err) {
+    alert("Submission failed: " + err.message);
+  }
+}
+</script>
+
 </body>
 </html>
