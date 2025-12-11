@@ -6,51 +6,53 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <style>
 body {
-  font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
   background: #f0f0f0;
+  font-family: Arial, sans-serif;
   display: flex;
   justify-content: center;
-  padding: 10px;
 }
 
 .container {
-  width: 100%;
+  width: 100vw; /* fill full screen width */
   max-width: 480px;
+  padding: 5vw; /* responsive padding */
   background: #fff;
   border-radius: 8px;
-  padding: 20px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  box-sizing: border-box;
 }
 
 h2 {
   text-align: center;
-  margin-bottom: 20px;
+  font-size: 6vw;
+  margin-bottom: 5vw;
 }
 
 label {
   display: block;
-  margin-top: 15px;
+  margin-top: 4vw;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 4.5vw;
 }
 
 input, textarea {
   width: 100%;
-  padding: 10px;
-  margin-top: 5px;
-  font-size: 16px;
+  padding: 3vw;
+  margin-top: 2vw;
+  font-size: 4.5vw;
   border-radius: 5px;
   border: 1px solid #ccc;
   box-sizing: border-box;
 }
 
 button {
-  display: inline-block;
-  padding: 10px 20px;
-  margin-top: 10px;
-  font-size: 16px;
+  display: block;
+  width: 100%;
+  padding: 4vw;
+  margin-top: 4vw;
+  font-size: 5vw;
   border: none;
   border-radius: 5px;
   background: #007bff;
@@ -64,39 +66,10 @@ button:hover {
 
 #video {
   width: 100%;
-  margin-top: 10px;
+  margin-top: 3vw;
   display: none;
   border: 1px solid #ccc;
   border-radius: 5px;
-}
-
-/* Mobile scaling tweaks */
-@media (max-width: 480px) {
-  input, textarea {
-    font-size: 18px;
-    padding: 12px;
-  }
-
-  button {
-    font-size: 18px;
-    padding: 12px;
-  }
-
-  label {
-    font-size: 18px;
-  }
-}
-
-/* Larger desktop screens */
-@media (min-width: 800px) {
-  input, textarea, button {
-    font-size: 18px;
-    padding: 12px;
-  }
-
-  label {
-    font-size: 18px;
-  }
 }
 </style>
 </head>
