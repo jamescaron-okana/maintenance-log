@@ -6,7 +6,8 @@
 <style>
 body { font-family: Arial; padding: 20px; }
 input, textarea { width: 100%; padding: 8px; margin-top: 10px; font-size: 15px; box-sizing: border-box; }
-button { margin-top: 15px; width: 100%; padding: 12px; font-size: 16px; }
+button { margin-top: 10px; padding: 10px; font-size: 15px; }
+#video { width: 100%; margin-top: 10px; display: none; border: 1px solid #ccc; }
 </style>
 </head>
 <body>
@@ -15,6 +16,9 @@ button { margin-top: 15px; width: 100%; padding: 12px; font-size: 16px; }
 
 <label>Machine Name:</label>
 <input id="machine" placeholder="Cabinet ID or Machine Name">
+<button onclick="startScan()">Scan QR</button>
+
+<video id="video"></video>
 
 <label>Issue Found:</label>
 <input id="issue" placeholder="Describe the issue">
@@ -30,8 +34,46 @@ button { margin-top: 15px; width: 100%; padding: 12px; font-size: 16px; }
 
 <button onclick="submitForm()">Submit Entry</button>
 
+<script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.js"></script>
 <script>
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzG4eiGiMUMbXmysSMlfvUWKLsoIPz-rx0mi1FUxhQHGEpKPwLkS43LP4MaSpOyAdch/exec"; // Replace with your web app URL
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzG4eiGiMUMbXmysSMlfvUWKLsoIPz-rx0mi1FUxhQHGEpKPwLkS43LP4MaSpOyAdch/exec"; // Replace with your Apps Script URL
+const video = document.getElementById('video');
+
+async function startScan() {
+  video.style.display = 'block';
+  const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
+  video.srcObject = stream;
+  video.setAttribute("playsinline", true); // iOS compatibility
+  video.play();
+  requestAnimationFrame(tick);
+}
+
+function tick() {
+  if (video.readyState === video.HAVE_ENOUGH_DATA) {
+    const canvas = document.createElement('canvas');
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const code = jsQR(imageData.data, canvas.width, canvas.height);
+    if (code) {
+      document.getElementById('machine').value = code.data;
+      stopScan();
+      return;
+    }
+  }
+  requestAnimationFrame(tick);
+}
+
+function stopScan() {
+  const stream = video.srcObject;
+  if (stream) {
+    stream.getTracks().forEach(track => track.stop());
+  }
+  video.srcObject = null;
+  video.style.display = 'none';
+}
 
 async function submitForm() {
   const machine = document.getElementById('machine').value.trim();
@@ -45,9 +87,7 @@ async function submitForm() {
     return;
   }
 
-  const payload = {
-    machine, issue, action, parts, tech
-  };
+  const payload = { machine, issue, action, parts, tech };
 
   try {
     const response = await fetch(WEB_APP_URL, {
@@ -55,7 +95,6 @@ async function submitForm() {
       body: JSON.stringify(payload),
       headers: { "Content-Type": "application/json" }
     });
-
     const result = await response.json();
     if (result.status === "success") {
       document.body.innerHTML = "<h3>Repair Logged ✓</h3>";
@@ -67,6 +106,5 @@ async function submitForm() {
   }
 }
 </script>
-
 </body>
 </html>
