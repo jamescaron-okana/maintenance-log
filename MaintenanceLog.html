@@ -4,36 +4,108 @@
 <meta charset="UTF-8">
 <title>Maintenance Log</title>
 <style>
-body { font-family: Arial; padding: 20px; }
-label { display: block; margin-top: 15px; font-weight: bold; }
-input, textarea, button { width: 100%; padding: 8px; margin-top: 5px; font-size: 15px; box-sizing: border-box; }
-button { margin-top: 10px; }
-#video { width: 100%; margin-top: 10px; display: none; border: 1px solid #ccc; }
+  /* Base styling */
+  body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    margin: 0;
+    background-color: #f7f7f7;
+    display: flex;
+    justify-content: center;
+  }
+
+  /* Container to center and limit width */
+  .container {
+    width: 100%;
+    max-width: 480px; /* nice width for desktop */
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  label {
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
+  }
+
+  input, textarea, button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+
+  button {
+    margin-top: 15px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  button:hover {
+    background-color: #0056b3;
+  }
+
+  #video {
+    width: 100%;
+    margin-top: 10px;
+    display: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  /* Mobile tweaks */
+  @media (max-width: 480px) {
+    body {
+      padding: 10px;
+    }
+    .container {
+      padding: 15px;
+    }
+    input, textarea, button {
+      font-size: 14px;
+      padding: 8px;
+    }
+  }
 </style>
 </head>
 <body>
 
-<h2>Maintenance Log Entry</h2>
+<div class="container">
+  <h2>Maintenance Log Entry</h2>
 
-<label>Machine Name:</label>
-<input id="machine" placeholder="Cabinet ID or Machine Name">
-<button onclick="startScan()">Scan QR</button>
+  <label>Machine Name:</label>
+  <input id="machine" placeholder="Cabinet ID or Machine Name">
+  <button onclick="startScan()">Scan QR</button>
 
-<video id="video"></video>
+  <video id="video"></video>
 
-<label>Issue Found:</label>
-<input id="issue" placeholder="Describe the issue">
+  <label>Issue Found:</label>
+  <input id="issue" placeholder="Describe the issue">
 
-<label>Actions Taken:</label>
-<textarea id="action" rows="3" placeholder="Repairs or steps taken…"></textarea>
+  <label>Actions Taken:</label>
+  <textarea id="action" rows="3" placeholder="Repairs or steps taken…"></textarea>
 
-<label>Parts Used:</label>
-<input id="parts" placeholder="Optional – list parts used">
+  <label>Parts Used:</label>
+  <input id="parts" placeholder="Optional – list parts used">
 
-<label>Technician Initials:</label>
-<input id="tech" placeholder="Your initials">
+  <label>Technician Initials:</label>
+  <input id="tech" placeholder="Your initials">
 
-<button onclick="submitForm()">Submit Entry</button>
+  <button onclick="submitForm()">Submit Entry</button>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.js"></script>
 <script>
@@ -98,7 +170,7 @@ async function submitForm() {
     });
     const result = await response.json();
     if (result.status === "success") {
-      document.body.innerHTML = "<h3>Repair Logged ✓</h3>";
+      document.body.innerHTML = "<h3 style='text-align:center;'>Repair Logged ✓</h3>";
     } else {
       alert("Error submitting data.");
     }
@@ -107,5 +179,6 @@ async function submitForm() {
   }
 }
 </script>
+
 </body>
 </html>
